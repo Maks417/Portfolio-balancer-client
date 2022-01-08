@@ -1,0 +1,79 @@
+@import 'variables';
+
+body {
+  padding: $body-padding;
+}
+
+a {
+  color: $color-dark-blue;
+}
+
+code {
+  color: $color-red;
+}
+
+.btn-primary {
+  color: $color-white;
+  background-color: $color-blue;
+  border-color: $color-border-blue;
+  padding: $primary-button-padding;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+
+  &:hover,
+  &:focus {
+    -moz-appearance: number-input;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.portfolio-balancer-form {
+  padding-bottom: 1em;
+
+  .form-group {
+    text-align: center;
+
+    input {
+      width: auto;
+      display: inline-block;
+      margin: 5px;
+    }
+  }
+
+  .stocks-group,
+  .bonds-group {
+
+    & .minus {
+      line-height: 2.5em;
+      padding: 0;
+    }
+  }
+
+  .number-field {
+    display: inline-block;
+    margin: $form-field-margin 0;
+
+    &.plus {
+      width: 3em;
+      text-align: center;
+      border: 1px solid $color-light-gray;
+      border-radius: 0.25rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    &:nth-last-child(1){
+      margin-left: $form-field-margin;
+    }
+
+    &.offset-1 {
+      margin-left: 8.333333%;
+    }
+  }
+}
