@@ -88,7 +88,7 @@ export class BalanceForm extends Component {
     }
 
     axios.post(
-        'api/portfolio/calculate', 
+        'https://portfoliobalancerserver20220108201429.azurewebsites.net/api/portfolio/calculate', 
         data, 
         { 'Content-Type': 'application/json' }
       )
