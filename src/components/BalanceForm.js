@@ -20,11 +20,12 @@ export class BalanceForm extends Component {
     this.submitData = this.submitData.bind(this);
 
     this.state = {
-      isRatioValidClass: '',
+      ratioValidClass: '',
       ratio: '',
       stocksValues: [{ value: '', currency: currencyOptions[0].value }],
       bondsValues: [{ value: '', currency: currencyOptions[0].value }],
       contributionAmount: { value: 0, currency: currencyOptions[0].value},
+      submitDisabled: false,
       resultBox: {
         showResult: false,
         resultBoxClass: 'success',
@@ -42,7 +43,7 @@ export class BalanceForm extends Component {
     }
 
     this.setState({
-      isRatioValidClass: validClass,
+      ratioValidClass: validClass,
       ratio: e.target.value
     });
   }
@@ -80,6 +81,8 @@ export class BalanceForm extends Component {
   submitData(e){
     e.preventDefault();
 
+    this.setState({ submitDisabled: true })
+
     const data = {
       ratio: this.state.ratio,
       stockValues: this.state.stocksValues,
@@ -102,17 +105,20 @@ export class BalanceForm extends Component {
         })
       })
       .catch((error) => {
-        if(error.response.status === 400) {
+        if(error.response && error.response.status === 400) {
           this.setState({
             resultBox: {
               showResult: true,
               resultBoxClass: 'danger',
-              text: JSON.stringify(error.response.data)
+              text: JSON.stringify(error.response.data.errors ?? error.response.data)
             }
           })
         } else {
-          console.log(error.response)
+          console.log(error.response ?? error)
         }
+      })
+      .finally(() => {
+        this.setState({ submitDisabled: false })
       });
   }
 
@@ -124,7 +130,7 @@ export class BalanceForm extends Component {
             <Col sm="12">
               <FormGroup className='form-group'>
                 <Label for="ratio">Пропорция портфеля (акции/облигации, %)</Label>
-                <Input required className={this.state.isRatioValidClass} type="text" name="ratio" id="ratio" placeholder="e.g. 70/30" onChange={this.validateRatio} />
+                <Input required className={this.state.ratioValidClass} type="text" name="ratio" id="ratio" placeholder="e.g. 70/30" onChange={this.validateRatio} />
                 <FormFeedback>Значение пропорции должно быть целое (100) или дробное (например, 50/50)</FormFeedback>
               </FormGroup>
             </Col>
@@ -134,42 +140,42 @@ export class BalanceForm extends Component {
               <FormGroup className="form-group stocks-group">
                 <Label for="stockValue">Добавьте стоимость каждой позиции в акциях</Label>
                 {this.state.stocksValues.map((element, index) => (
-                  <div className='row' key={index}>
+                  <div className='row justify-content-center' key={index}>
                     {
                       index ? 
-                      <div className="col-1 minus" onClick={() => this.removeValueField(index, this.state.stocksValues)}><i className="glyphicon glyphicon-minus"></i></div> 
+                      <div className="col-1 minus" onClick={() => this.removeValueField(index, this.state.stocksValues)}><i className="fa fa-minus"></i></div> 
                       : null
                     }
-                    <Input className='offset-1 col-8 number-field' type="number" name={`stockValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.stocksValues)} />
-                    <Input disabled className="col-2 number-field" type="select" name={`stockValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.stocksValues)}>
+                    <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`stockValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.stocksValues)} />
+                    <Input disabled className="col-3 number-field" type="select" name={`stockValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.stocksValues)}>
                       {currencyOptions.map((item, i) => (
                         <option key={i} value={item.value}>{item.text}</option>
                       ))}
                     </Input>
                   </div>
                 ))}
-                <div className="number-field plus" onClick={() => this.addValueField('stocksValues', this.state.stocksValues)}><i className="glyphicon glyphicon-plus"></i></div>
+                <div className="number-field plus" onClick={() => this.addValueField('stocksValues', this.state.stocksValues)}><i className="fa fa-plus"></i></div>
               </FormGroup>
             </Col>
             <Col sm="12" md="6">
               <FormGroup className="form-group bonds-group">
                   <Label for="bondValue">Добавьте стоимость каждой позиции в облигациях</Label>
                   {this.state.bondsValues.map((element, index) => (
-                    <div className='row' key={index}>
+                    <div className='row justify-content-center' key={index}>
                       {
                         index ? 
-                        <div className="col-1 minus" onClick={() => this.removeValueField(index, this.state.bondsValues)}><i className="glyphicon glyphicon-minus"></i></div> 
+                        <div className="col-1 minus" onClick={() => this.removeValueField(index, this.state.bondsValues)}><i className="fa fa-minus"></i></div> 
                         : null
                       }
-                      <Input className='offset-1 col-8 number-field' type="number" name={`bondValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.bondsValues)} />
-                      <Input disabled className="col-2 number-field" type="select" name={`bondValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.bondsValues)}>
+                      <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`bondValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.bondsValues)} />
+                      <Input disabled className="col-3 number-field" type="select" name={`bondValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.bondsValues)}>
                         {currencyOptions.map((item, i) => (
                           <option key={i} value={item.value}>{item.text}</option>
                         ))}
                       </Input>
                     </div>
                   ))}
-                  <div className="number-field plus" onClick={() => this.addValueField('bondsValues', this.state.bondsValues)}><i className="glyphicon glyphicon-plus"></i></div>
+                  <div className="number-field plus" onClick={() => this.addValueField('bondsValues', this.state.bondsValues)}><i className="fa fa-plus"></i></div>
               </FormGroup>
             </Col>
           </Row>
@@ -177,24 +183,32 @@ export class BalanceForm extends Component {
             <Col sm="12">
               <FormGroup className='form-group'>
                 <Label for="contributionAmount">Сумма, которую хотите внести</Label>
-                <Input required className='number-field offset-1' type="number" name="contributionAmount" id="contributionAmount" onChange={this.changeContribution}/>
-                <Input disabled className="col-2 number-field" type="select" name={'contributionAmount_currency'} value={this.state.contributionAmount.currency}>
-                      {currencyOptions.map((item, i) => (
-                        <option key={i} value={item.value}>{item.text}</option>
-                      ))}
-                    </Input>
+                <div className='row justify-content-center'>
+                  <Input required className='offset-1 number-field' type="number" name="contributionAmount" id="contributionAmount" onChange={this.changeContribution}/>
+                  <Input disabled className="col-2 number-field" type="select" name={'contributionAmount_currency'} value={this.state.contributionAmount.currency}>
+                        {currencyOptions.map((item, i) => (
+                          <option key={i} value={item.value}>{item.text}</option>
+                        ))}
+                  </Input>
+                </div>
               </FormGroup>
             </Col>
           </Row>
           <Row>
             <Col className='text-center'>
-              <Button color="primary" type="submit">Рассчитать</Button>
+              <Button color="primary" type="submit" disabled={this.state.submitDisabled}>Рассчитать</Button>
             </Col>
           </Row>
         </Form>
-        <Alert show={this.state.resultBox.showResult.toString()} fade={!this.state.resultBox.showResult} variant={this.state.resultBox.resultBoxClass}>
-            {this.state.resultBox.text}
-        </Alert>
+        <div className='col-10 offset-1'>
+          {
+            this.state.resultBox.showResult ?
+            <Alert show={this.state.resultBox.showResult.toString()} variant={this.state.resultBox.resultBoxClass}>
+                {this.state.resultBox.text}
+            </Alert>
+            : null
+          }
+        </div>
       </div>
     );
   }

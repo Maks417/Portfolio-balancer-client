@@ -9,7 +9,7 @@ export class Home extends Component {
     return (
       <Container>
         <Row>
-          <Col className='justify-content-md-center'>
+          <Col className='row justify-content-md-center'>
             <BalanceForm />
           </Col>
         </Row>

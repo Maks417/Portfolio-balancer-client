@@ -1,4 +1,7 @@
 @import 'variables';
+@import "bootstrap/scss/functions"; 
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 
 body {
   padding: $body-padding;
@@ -41,10 +44,13 @@ input[type="number"] {
     text-align: center;
 
     input {
-      width: auto;
+      max-width: 53%;
       display: inline-block;
-      margin: 5px;
     }
+  }
+
+  .form-select {
+    max-width: fit-content;
   }
 
   .stocks-group,
@@ -74,6 +80,15 @@ input[type="number"] {
 
     &.offset-1 {
       margin-left: 8.333333%;
+    }
+  }
+
+  @include media-breakpoint-between(md, xl) {
+    .stocks-group,
+    .bonds-group {
+      .form-label {
+        min-height: 95px;
+      }
     }
   }
 }
