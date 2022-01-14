@@ -44,22 +44,13 @@ input[type="number"] {
     text-align: center;
 
     input {
-      max-width: 53%;
+      max-width: 50%;
       display: inline-block;
     }
   }
 
   .form-select {
     max-width: fit-content;
-  }
-
-  .stocks-group,
-  .bonds-group {
-
-    & .minus {
-      line-height: 2.5em;
-      padding: 0;
-    }
   }
 
   .number-field {
@@ -74,9 +65,18 @@ input[type="number"] {
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
+    &.minus {
+      line-height: 2.5em;
+      padding: 0;
+      margin-right: 5px;
+      border-color: $color-light-gray;
+    }
+
     &.plus,
     &.minus {
       cursor: pointer;
+      background-color: $color-gray;
+      color: $color-light-black;
     }
 
     &:nth-last-child(1){

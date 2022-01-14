@@ -143,7 +143,10 @@ export class BalanceForm extends Component {
                   <div className='row justify-content-center' key={index}>
                     {
                       index ? 
-                      <div className="number-field minus col-1" onClick={() => this.removeValueField(index, this.state.stocksValues)}><i className="fa fa-minus"></i></div> 
+                      <Button className="number-field minus col-1" 
+                        onClick={() => this.removeValueField(index, this.state.stocksValues)}>
+                          <i className="fa fa-minus"></i>
+                      </Button> 
                       : null
                     }
                     <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`stockValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.stocksValues)} />
@@ -154,7 +157,10 @@ export class BalanceForm extends Component {
                     </Input>
                   </div>
                 ))}
-                <div className="number-field plus" onClick={() => this.addValueField('stocksValues', this.state.stocksValues)}><i className="fa fa-plus"></i></div>
+                <Button className="number-field plus"
+                  onClick={() => this.addValueField('stocksValues', this.state.stocksValues)}>
+                    <i className="fa fa-plus"></i>
+                </Button>
               </FormGroup>
             </Col>
             <Col sm="12" md="6">
@@ -164,7 +170,10 @@ export class BalanceForm extends Component {
                     <div className='row justify-content-center' key={index}>
                       {
                         index ? 
-                        <div className="col-1 minus" onClick={() => this.removeValueField(index, this.state.bondsValues)}><i className="fa fa-minus"></i></div> 
+                        <Button className="number-field minus col-1" 
+                          onClick={() => this.removeValueField(index, this.state.bondsValues)}>
+                            <i className="fa fa-minus"></i>
+                        </Button> 
                         : null
                       }
                       <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`bondValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.bondsValues)} />
@@ -175,7 +184,10 @@ export class BalanceForm extends Component {
                       </Input>
                     </div>
                   ))}
-                  <div className="number-field plus" onClick={() => this.addValueField('bondsValues', this.state.bondsValues)}><i className="fa fa-plus"></i></div>
+                  <Button className="number-field plus" 
+                    onClick={() => this.addValueField('bondsValues', this.state.bondsValues)}>
+                      <i className="fa fa-plus"></i>
+                  </Button>
               </FormGroup>
             </Col>
           </Row>
@@ -200,6 +212,7 @@ export class BalanceForm extends Component {
             </Col>
           </Row>
         </Form>
+
         <div className='col-10 offset-1'>
           {
             this.state.resultBox.showResult ?
