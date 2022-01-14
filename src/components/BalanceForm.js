@@ -143,7 +143,7 @@ export class BalanceForm extends Component {
                   <div className='row justify-content-center' key={index}>
                     {
                       index ? 
-                      <div className="col-1 minus" onClick={() => this.removeValueField(index, this.state.stocksValues)}><i className="fa fa-minus"></i></div> 
+                      <div className="number-field minus col-1" onClick={() => this.removeValueField(index, this.state.stocksValues)}><i className="fa fa-minus"></i></div> 
                       : null
                     }
                     <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`stockValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.stocksValues)} />

@@ -65,13 +65,18 @@ input[type="number"] {
   .number-field {
     display: inline-block;
     margin: $form-field-margin 0;
-
+    
     &.plus {
       width: 3em;
       text-align: center;
       border: 1px solid $color-light-gray;
       border-radius: 0.25rem;
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    &.plus,
+    &.minus {
+      cursor: pointer;
     }
 
     &:nth-last-child(1){
