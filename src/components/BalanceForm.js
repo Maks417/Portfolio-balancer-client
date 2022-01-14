@@ -48,10 +48,12 @@ export class BalanceForm extends Component {
     });
   }
 
-  addValueField(name, valuesArr){
+  addValueField(e, name, valuesArr){
+    e.stopPropagation();
+    
     this.setState(({
-      [name]: [...valuesArr, { value: '', currency: valuesArr.at(-1).currency }]
-    }))
+      [name]: [...valuesArr, { value: '', currency: currencyOptions[0].value }]
+    }));
   }
 
   removeValueField(i, valuesArr){
@@ -158,7 +160,7 @@ export class BalanceForm extends Component {
                   </div>
                 ))}
                 <Button className="number-field plus"
-                  onClick={() => this.addValueField('stocksValues', this.state.stocksValues)}>
+                  onClick={e => this.addValueField(e, 'stocksValues', this.state.stocksValues)}>
                     <i className="fa fa-plus"></i>
                 </Button>
               </FormGroup>
@@ -185,7 +187,7 @@ export class BalanceForm extends Component {
                     </div>
                   ))}
                   <Button className="number-field plus" 
-                    onClick={() => this.addValueField('bondsValues', this.state.bondsValues)}>
+                    onClick={e => this.addValueField(e, 'bondsValues', this.state.bondsValues)}>
                       <i className="fa fa-plus"></i>
                   </Button>
               </FormGroup>

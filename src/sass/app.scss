@@ -54,7 +54,6 @@ input[type="number"] {
   }
 
   .number-field {
-    display: inline-block;
     margin: $form-field-margin 0;
     
     &.plus {
@@ -74,7 +73,6 @@ input[type="number"] {
 
     &.plus,
     &.minus {
-      cursor: pointer;
       background-color: $color-gray;
       color: $color-light-black;
     }
