@@ -102,11 +102,14 @@ export class BalanceForm extends Component {
         { 'Content-Type': 'application/json' }
       )
       .then((response) => {
+
+        const currencySign = currencyOptions.find(e => e.value === response.data.currency).text;
+
         this.setState({
           resultBox: {
             showResult: true,
             resultBoxClass: 'success',
-            text: `Купить акций на: ${JSON.stringify(response.data.stocksDiff)}. Купить облигаций на:  ${JSON.stringify(response.data.bondsDiff)}`
+            text: `Купить акций на: ${currencySign}${JSON.stringify(response.data.stocksDiff)}. Купить облигаций на: ${currencySign}${JSON.stringify(response.data.bondsDiff)}`
           }
         })
       })
