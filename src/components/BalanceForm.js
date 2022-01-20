@@ -75,8 +75,12 @@ export class BalanceForm extends Component {
   }
 
   changeContribution(e) {
+    const contribution = e.target.type === 'number' 
+      ? { value: e.target.value, currency: this.state.contributionAmount.currency }
+      :  { value: this.state.contributionAmount.value, currency: e.target.value };
+
     this.setState({
-      contributionAmount: { value: e.target.value, currency: currencyOptions[0].value },
+      contributionAmount: contribution,
     });
   }
 
@@ -89,7 +93,7 @@ export class BalanceForm extends Component {
       ratio: this.state.ratio,
       stockValues: this.state.stocksValues,
       bondValues: this.state.bondsValues,
-      ContributionAmount: this.state.contributionAmount
+      contributionAmount: this.state.contributionAmount
     }
 
     axios.post(
@@ -152,7 +156,7 @@ export class BalanceForm extends Component {
                       : null
                     }
                     <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`stockValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.stocksValues)} />
-                    <Input disabled className="col-3 number-field" type="select" name={`stockValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.stocksValues)}>
+                    <Input className="col-3 number-field" type="select" name={`stockValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.stocksValues)}>
                       {currencyOptions.map((item, i) => (
                         <option key={i} value={item.value}>{item.text}</option>
                       ))}
@@ -179,7 +183,7 @@ export class BalanceForm extends Component {
                         : null
                       }
                       <Input className={index ? 'col-7 number-field' : 'offset-1 col-7 number-field'} type="number" name={`bondValue_value_${index}`} value={element.value} onChange={e => this.handleValues(index, e, this.state.bondsValues)} />
-                      <Input disabled className="col-3 number-field" type="select" name={`bondValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.bondsValues)}>
+                      <Input className="col-3 number-field" type="select" name={`bondValue_currency_${index}`} value={element.currency} onChange={e => this.handleValues(index, e, this.state.bondsValues)}>
                         {currencyOptions.map((item, i) => (
                           <option key={i} value={item.value}>{item.text}</option>
                         ))}
@@ -199,7 +203,7 @@ export class BalanceForm extends Component {
                 <Label for="contributionAmount">Сумма, которую хотите внести</Label>
                 <div className='row justify-content-center'>
                   <Input required className='offset-1 number-field' type="number" name="contributionAmount" id="contributionAmount" onChange={this.changeContribution}/>
-                  <Input disabled className="col-2 number-field" type="select" name={'contributionAmount_currency'} value={this.state.contributionAmount.currency}>
+                  <Input className="col-2 number-field" type="select" name={'contributionAmount_currency'} value={this.state.contributionAmount.currency} onChange={this.changeContribution}>
                         {currencyOptions.map((item, i) => (
                           <option key={i} value={item.value}>{item.text}</option>
                         ))}
