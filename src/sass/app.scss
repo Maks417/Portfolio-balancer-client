@@ -86,6 +86,23 @@ input[type="number"] {
     }
   }
 
+  .range-slider__container {
+    margin: 10px 0;
+
+    input[type="range"] {
+      width: 100%;
+
+      &::-webkit-slider-thumb {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        cursor: ew-resize;
+        box-shadow: 0 0 2px 0 #555;
+        transition: background .2s ease-in-out;
+      }
+    }
+  }
+
   @include media-breakpoint-between(md, xl) {
     .stocks-group,
     .bonds-group {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Col, Row, Form, FormGroup, Button, Label, Input, FormFeedback } from 'reactstrap';
+import RangeSlider from 'react-bootstrap-range-slider';
 import axios from 'axios';
 
 const currencyOptions = [
@@ -11,7 +12,7 @@ const currencyOptions = [
 const BalanceForm = () => {
 
   const [ratioValidClass, setRatioValidClass] = useState('');
-  const [ratio, setRatio] = useState('');
+  const [ratio, setRatio] = useState({ text: '50/50', value: 50 });
   const [assets, setAssets] = useState({ 
     stocksValues: [{ value: '', currency: currencyOptions[0].value }], 
     bondsValues: [{ value: '', currency: currencyOptions[0].value }]
@@ -22,14 +23,31 @@ const BalanceForm = () => {
 
   const validateRatio = (e) => {
     let validClass = e.target.value === '100' ? 'is-valid' : 'is-invalid';
+    const arr = e.target.value.split('/')
 
-    if(e.target.value.length > 3 && e.target.value.length < 6){
-      const arr = e.target.value.split('/')
+    if(e.target.value.length > 3 && e.target.value.length < 6){   
       validClass = arr.length === 2 && arr.reduce((prev, curr) => (Number(prev) || 0) + (Number(curr) || 0)) === 100 ? "is-valid" : "is-invalid"
     }
 
     setRatioValidClass(validClass)
-    setRatio( e.target.value)
+    setRatio({ text: e.target.value, value: Number(arr[0]) })
+  }
+
+  const handleSliderRatio = (e) => {
+    let newText = ''
+    const bondsPart = 100 - e.target.value;
+    switch(bondsPart) {
+      case 0:
+        newText = '100'
+        break;
+      case 100:
+        newText = '0'
+        break;
+      default:
+        newText = `${e.target.value}/${bondsPart}`
+    }
+
+    setRatio({ text: newText, value: e.target.value })
   }
 
   const addValueField = (e, name, valuesArr) => {
@@ -69,7 +87,7 @@ const BalanceForm = () => {
     setSubmitDisabled(true);
 
     const data = {
-      ratio: ratio,
+      ratio: ratio.text,
       stockValues: assets.stocksValues,
       bondValues: assets.bondsValues,
       contributionAmount: contributionAmount
@@ -98,7 +116,7 @@ const BalanceForm = () => {
             text: JSON.stringify(error.response.data.errors ?? error.response.data)
           })
         } else {
-          console.log(error.response ?? error)
+          console.error(error.response ?? error)
         }
       })
       .finally(() => {
@@ -113,7 +131,14 @@ const BalanceForm = () => {
           <Col sm="12">
             <FormGroup className='form-group'>
               <Label for="ratio">Пропорция портфеля (акции/облигации, %)</Label>
-              <Input required className={ratioValidClass} type="text" name="ratio" id="ratio" placeholder="e.g. 70/30" onChange={validateRatio} />
+              <div className='range-slider__container'>
+                <RangeSlider 
+                  value={ratio.value}
+                  tooltip='off'
+                  onChange={handleSliderRatio}
+                  size='sm' />
+              </div>
+              <Input required className={ratioValidClass} type="text" name="ratio" id="ratio" value={ratio.text} placeholder="e.g. 70/30" onChange={validateRatio} />
               <FormFeedback>Значение пропорции должно быть целое (100) или дробное (например, 50/50)</FormFeedback>
             </FormGroup>
           </Col>
