@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container } from 'reactstrap';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
-
-  render () {
+const Layout = (props) => {
     return (
       <div>
         <Container>
-          {this.props.children}
+          {props.children}
         </Container>
       </div>
     );
-  }
 }
+
+export default Layout;

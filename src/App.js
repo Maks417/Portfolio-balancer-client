@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { NotFound } from './components/NotFound';
+import Layout from './components/Layout';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
 
 import './sass/app.scss'
 
-function App() {
+const App = () => {
   return (
     <Layout>
       <Router>

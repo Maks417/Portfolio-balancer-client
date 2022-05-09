@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export class NotFound extends Component {
-  render() {
+const NotFound = () => {
     return (
       <div>
         <h1>404 - Not Found</h1>
@@ -11,5 +10,6 @@ export class NotFound extends Component {
         </Link>
       </div>
     );
-  }
 }
+
+export default NotFound;
