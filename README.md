@@ -1,1 +1,2 @@
+[![CodeQL](https://github.com/Maks417/portfolio-balancer-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Maks417/portfolio-balancer-client/actions/workflows/codeql-analysis.yml)
 [![pages-build-deployment](https://github.com/Maks417/portfolio-balancer-client/actions/workflows/pages/pages-build-deployment/badge.svg?branch=master)](https://github.com/Maks417/portfolio-balancer-client/actions/workflows/pages/pages-build-deployment)
