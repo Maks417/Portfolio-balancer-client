@@ -11,7 +11,7 @@ const App = () => {
     <Layout>
       <Router>
         <Routes>
-          <Route exact path='/portfolio-balancer-client' element={<Home />} />
+          <Route exact path='/' element={<Home />} />
           <Route component={<NotFound />} />
         </Routes>
       </Router>
