@@ -94,7 +94,7 @@ const BalanceForm = () => {
     }
 
     axios.post(
-        'https://portfoliobalancerserver.azurewebsites.net/api/portfolio/calculate', 
+        'https://portfolio-balancer-server.azurewebsites.net/api/portfolio/calculate', 
         data, 
         { 'Content-Type': 'application/json' }
       )
